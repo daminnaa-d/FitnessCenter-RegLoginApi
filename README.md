@@ -1,5 +1,5 @@
 # FitnessCenter-RegLoginApi
-Microservice for user creation(registration) and login
+Microservice for user creation(registration) and login.
 Registration and Login component for register and login the function of the user. 
 API methods: 
 GET method for login (gets username and password, and returns a boolean value (true/false) if the user is logged in). 
