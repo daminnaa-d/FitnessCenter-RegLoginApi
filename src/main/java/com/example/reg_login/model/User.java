@@ -14,5 +14,6 @@ public class User {
     private String phoneNumber;
     private String birthday ;
     private String pswd;
+    private int trainerId;
 
 }
