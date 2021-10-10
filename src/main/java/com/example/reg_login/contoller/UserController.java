@@ -15,7 +15,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("")
-    public ResponseEntity<?> getAllBooks(){
+    public ResponseEntity<?> getAllUsers(){
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
@@ -36,7 +36,7 @@ public class UserController {
 
     @PostMapping("/login")
     public boolean loginUser(@RequestBody User u){
-        for( User user: Database.getDatabase().getUsers()){
+        for( User user: userService.getAllUsers()){
             if(user.getName().equals(u.getName()) && user.getPswd().equals(u.getPswd())){
                 return true;
             }

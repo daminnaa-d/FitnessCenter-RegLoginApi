@@ -1,43 +1,53 @@
 package com.example.reg_login.service.impl;
 
-import com.example.reg_login.db.Database;
 import com.example.reg_login.model.User;
+import com.example.reg_login.repository.UserRepository;
 import com.example.reg_login.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<User> getAllUsers() {
-        return Database.getDatabase().getUsers();
+        return userRepository.findAll();
     }
 
     @Override
-    public User getUserById(int id) {
-        for (User user:Database.getDatabase().getUsers()) {
-            if(user.getId() == id){
-                return user;
-            }
-        }
-        return null;
+    public Optional<User> getUserById(int id) {
+        return userRepository.findAll().stream().filter(user -> user.getId() == id).findFirst();
+
     }
 
     @Override
     public void addUser(User user) {
-        Database.getDatabase().getUsers().add(user);
+       userRepository.save(user);
     }
 
     @Override
     public void updateUser(int id, User user) {
-        List<User> users = Database.getDatabase().getUsers();
-        for(int i = 0; i < users.size(); i++){
-            User u = users.get(i);
-            if (u.getId() == id){
-                users.set(i, user);
+        int a;
+        try{
+            User userDB = userRepository.findById(id).orElse(null);
+
+            if (userDB != null) {
+                userDB.setName(user.getName());
+                userDB.setPswd(user.getPswd());
+                userDB.setMoney(user.getMoney());
+                userDB.setBirthday(user.getBirthday());
+                userDB.setPhoneNumber(user.getPhoneNumber());
+
+                userRepository.saveAndFlush(userDB);
             }
+        }catch(Exception e){
+            System.out.println(e);
         }
+
     }
 }
