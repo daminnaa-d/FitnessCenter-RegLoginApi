@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(int id, User user) {
-        int a;
         try{
             User userDB = userRepository.findById(id).orElse(null);
 
