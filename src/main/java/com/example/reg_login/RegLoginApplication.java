@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableCircuitBreaker
 @EnableHystrixDashboard
 @EnableHystrix
 public class RegLoginApplication {
