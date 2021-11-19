@@ -10,6 +10,12 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -28,7 +34,18 @@ public class RegLoginApplication {
         HttpComponentsClientHttpRequestFactory requestFactory
                 = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setConnectTimeout(3000);
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-        return restTemplate;
+
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+		credentialsProvider.setCredentials(AuthScope.ANY,
+				new UsernamePasswordCredentials("rest-client", "p@ssword"));
+
+		HttpClient client = HttpClientBuilder
+				.create()
+				.setDefaultCredentialsProvider(credentialsProvider)
+				.build();
+
+		requestFactory.setHttpClient(client);
+
+		return new RestTemplate(requestFactory);
     }
 }
