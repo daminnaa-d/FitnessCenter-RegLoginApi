@@ -12,7 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity
 @Table(name="Users")
-public class User {
+public class User  {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
@@ -21,4 +21,5 @@ public class User {
     private String phoneNumber;
     private String birthday ;
     private String pswd;
+
 }

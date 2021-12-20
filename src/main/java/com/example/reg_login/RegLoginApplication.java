@@ -17,11 +17,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
 
+
 @SpringBootApplication
 @EnableEurekaClient
 @EnableCircuitBreaker
 @EnableHystrixDashboard
-@EnableHystrix
+//@EnableHystrix
 public class RegLoginApplication {
 
     public static void main(String[] args) {
@@ -36,16 +37,16 @@ public class RegLoginApplication {
         requestFactory.setConnectTimeout(3000);
 
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-		credentialsProvider.setCredentials(AuthScope.ANY,
-				new UsernamePasswordCredentials("rest-client", "p@ssword"));
+        credentialsProvider.setCredentials(AuthScope.ANY,
+                new UsernamePasswordCredentials("user", "12345678"));
 
-		HttpClient client = HttpClientBuilder
-				.create()
-				.setDefaultCredentialsProvider(credentialsProvider)
-				.build();
+        HttpClient client = HttpClientBuilder
+                .create()
+                .setDefaultCredentialsProvider(credentialsProvider)
+                .build();
 
-		requestFactory.setHttpClient(client);
+        requestFactory.setHttpClient(client);
 
-		return new RestTemplate(requestFactory);
+        return new RestTemplate(requestFactory);
     }
 }
